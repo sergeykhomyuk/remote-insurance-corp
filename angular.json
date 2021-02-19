@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "field-sales",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "field-sales": {
+      "projectType": "application",
+      "root": "apps/field-sales",
+      "sourceRoot": "apps/field-sales/src",
+      "prefix": "ric",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/field-sales",
+            "index": "apps/field-sales/src/index.html",
+            "main": "apps/field-sales/src/main.ts",
+            "polyfills": "apps/field-sales/src/polyfills.ts",
+            "tsConfig": "apps/field-sales/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/field-sales/src/favicon.ico",
+              "apps/field-sales/src/assets"
+            ],
+            "styles": ["apps/field-sales/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/field-sales/src/environments/environment.ts",
+                  "with": "apps/field-sales/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "field-sales:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "field-sales:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "field-sales:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/field-sales/src/**/*.ts",
+              "apps/field-sales/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/field-sales"],
+          "options": {
+            "jestConfig": "apps/field-sales/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "field-sales-e2e": {
+      "root": "apps/field-sales-e2e",
+      "sourceRoot": "apps/field-sales-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/field-sales-e2e/cypress.json",
+            "tsConfig": "apps/field-sales-e2e/tsconfig.e2e.json",
+            "devServerTarget": "field-sales:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "field-sales:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/field-sales-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
