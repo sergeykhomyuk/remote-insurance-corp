@@ -1,0 +1,65 @@
+<mat-dialog-content>
+  <mat-spinner
+    *ngIf="state.isLoading"
+    class="application-loading-indicator"
+  ></mat-spinner>
+
+  <ng-container *ngIf="!state.isLoading">
+    <div *ngIf="state.isLoadingFailed" class="application-loading-error">
+      <div class="mat-h2">Failed to load application</div>
+      <div>
+        Click
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onTryLoadApplicationMetaData()"
+        >
+          Refresh
+        </button>
+        to try again.
+      </div>
+    </div>
+
+    <form
+      *ngIf="!state.isLoadingFailed && applicationForm"
+      [formGroup]="applicationForm"
+      (ngSubmit)="onSubmit($event)"
+    >
+      <div
+        *ngFor="
+          let fieldMetaData of applicationMetaData?.fields;
+          trackBy: trackByFieldId
+        "
+      >
+        <ric-application-form-field
+          [control]="applicationForm.get(fieldMetaData.id)"
+          [fieldMetaData]="fieldMetaData"
+        ></ric-application-form-field>
+      </div>
+    </form>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="
+      state.isLoading ||
+      state.isLoadingFailed ||
+      state.isSubmitting ||
+      !applicationForm?.valid
+    "
+    (click)="onSubmit()"
+  >
+    <mat-spinner
+      *ngIf="state.isSubmitting"
+      diameter="16"
+      class="submitting-indicator"
+    ></mat-spinner
+    >Submit
+  </button>
+</mat-dialog-actions>

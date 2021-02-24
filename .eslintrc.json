@@ -12,7 +12,40 @@
             "enforceBuildableLibDependency": true,
             "allow": [],
             "depConstraints": [
-              { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
+              {
+                "sourceTag": "type:core",
+                "onlyDependOnLibsWithTags": ["type:core"]
+              },
+              {
+                "sourceTag": "type:api",
+                "onlyDependOnLibsWithTags": ["type:core", "type:api"]
+              },
+              {
+                "sourceTag": "type:common",
+                "onlyDependOnLibsWithTags": [
+                  "type:core",
+                  "type:api",
+                  "type:common"
+                ]
+              },
+              {
+                "sourceTag": "type:feature",
+                "onlyDependOnLibsWithTags": [
+                  "type:core",
+                  "type:api",
+                  "type:common",
+                  "type:feature"
+                ]
+              },
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": [
+                  "type:core",
+                  "type:api",
+                  "type:common",
+                  "type:feature"
+                ]
+              }
             ]
           }
         ]

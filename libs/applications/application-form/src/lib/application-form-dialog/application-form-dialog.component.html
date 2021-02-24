@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ product?.name }}</h1>
+<div class="mat-h4 product-description-short">
+  {{ product?.description.short }}
+</div>
+<ric-application-from
+  [product]="product"
+  (applied)="onApplied($event)"
+  (canceled)="onCanceled()"
+></ric-application-from>

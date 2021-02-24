@@ -1,0 +1,25 @@
+{
+  "fields": [
+    {
+      "id": "first_name",
+      "type": "string",
+      "title": "Manager first name",
+      "required": true,
+      "maxLength": 64
+    },
+    {
+      "id": "last_name",
+      "type": "string",
+      "title": "Manager last name",
+      "required": true,
+      "maxLength": 64
+    },
+    {
+      "id": "company_name",
+      "type": "string",
+      "title": "Company name",
+      "required": true,
+      "maxLength": 64
+    }
+  ]
+}

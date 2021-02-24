@@ -1,0 +1,26 @@
+{
+  "fields": [
+    {
+      "id": "first_name",
+      "type": "string",
+      "title": "First name",
+      "required": true,
+      "maxLength": 64
+    },
+    {
+      "id": "last_name",
+      "type": "string",
+      "title": "Last name",
+      "required": true,
+      "maxLength": 64
+    },
+    {
+      "id": "insurance_amount",
+      "type": "number",
+      "title": "Insurance amount",
+      "required": true,
+      "min": 1000,
+      "max": 1000000
+    }
+  ]
+}

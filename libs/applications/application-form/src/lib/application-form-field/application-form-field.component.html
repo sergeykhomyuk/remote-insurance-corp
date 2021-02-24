@@ -1,0 +1,20 @@
+<mat-form-field appearance="standard" class="form-field">
+  <mat-label
+    >{{ fieldMetaData?.title
+    }}<ng-container *ngIf="fieldMetaData?.isRequired"
+      >*</ng-container
+    ></mat-label
+  >
+  <input
+    matInput
+    [attr.name]="fieldMetaData?.id"
+    [type]="controlType"
+    [formControl]="control"
+  />
+  <mat-error *ngIf="control?.invalid && (control?.dirty || control?.touched)">
+    <ric-application-form-field-errors
+      [errors]="control?.errors"
+      [fieldMetaData]="fieldMetaData"
+    ></ric-application-form-field-errors>
+  </mat-error>
+</mat-form-field>

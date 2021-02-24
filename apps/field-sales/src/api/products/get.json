@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": "individual-life",
+      "name": "Individual Life",
+      "description": {
+        "image": "/assets/individual-life.png",
+        "short": "Growing relationships and providing solutions that create real value",
+        "full": "Incredible challenges facing the industry also present extraordinary opportunities\nIn approaching this era of change, Munich Re Life US is intent on seeking new sources of data and providing fresh insight in order to help you expand and serve new markets. Munich Re was among the first to recognize that digital transformation is fundamental to our shared future. We are one of the world’s leading providers of reinsurance and insurance-related risk solutions, with a proven track record of deep risk expertise, innovative thinking, a solid capital base, and a fundamental understanding of the capital management needs of primary insurance companies.\nA partnership approach designed to help you adapt and grow successfully\nMunich Re Life US takes a unique partnership approach to our clients' business. We’ll be there to help you embrace the future with all the digital world has to offer. We’ll be there to help you leverage new sources of data to uncover new markets. We’ll be there to help you adapt and deploy any tool or technology — or develop any tool or technology yet to be imagined. And we’ll be there to provide the guidance necessary to help you thrive in a shifting landscape."
+      }
+    },
+    {
+      "id": "group-insurance",
+      "name": "Group Insurance",
+      "description": {
+        "image": "/assets/group-insurance.jpg",
+        "short": "Progressing ahead of the industry to help our clients expand insurability and grow profitability",
+        "full": "Your expert partner in group insurance\nMunich Re leads the global reinsurance market by net premiums and Munich Re Life US, a subsidiary of Munich Re, is one of the largest group benefits reinsurers in the U.S. Our clients become and maintain their position as industry leaders when they partner with us, leveraging our broad industry perspective and expert resources. We are uniquely positioned to solve risk challenges, helping to transform the market by staying ahead of external factors impacting our business.\nMunich Re’s U.S. team of industry specialists are backed by our global network of actuarial, underwriting and claims experts, providing us with insights into worldwide insurance trends and innovation. Our history of rock-solid financial stability provides us with unparalleled capacity and an appetite for growth.\nPartner with us, evolve and grow with confidence."
+      }
+    },
+    {
+      "id": "financial-reinsurance",
+      "name": "Financial Reinsurance",
+      "description": {
+        "image": "/assets/financial-reinsurance.png",
+        "short": "Customized and cost effective solutions for a full range of life, annuity, living benefits and health products",
+        "full": "The business and regulatory environment are changing and creates new opportunities along with financial challenges. Managing these issues requires not only a deep understanding of the changing market landscape but also the ability to develop customized reinsurance solutions.\nOur Financial Reinsurance team combines corporate finance, regulatory, accounting, tax and actuarial expertise to provide our clients with advice and reinsurance solutions to meet their financial and strategic objectives. We provide customized but simple, straightforward solutions for a full range of, annuity, living benefits and health products."
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<div *ngIf="errors?.min">
+  {{ fieldMetaData?.title }} cannot be less than {{ errors.min.min }}.
+</div>
+<div *ngIf="errors?.max">
+  {{ fieldMetaData?.title }} cannot be more than {{ errors.max.max }}.
+</div>

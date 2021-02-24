@@ -28,7 +28,13 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "changeDetection": "OnPush"
+    },
+    "@schematics/angular": {
+      "component": {
+        "changeDetection": "OnPush"
+      }
     }
   },
   "projects": {
@@ -49,9 +55,13 @@
             "aot": true,
             "assets": [
               "apps/field-sales/src/favicon.ico",
-              "apps/field-sales/src/assets"
+              "apps/field-sales/src/assets",
+              "apps/field-sales/src/api"
             ],
-            "styles": ["apps/field-sales/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/field-sales/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -142,6 +152,206 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/field-sales-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "products-core": {
+      "projectType": "library",
+      "root": "libs/products/core",
+      "sourceRoot": "libs/products/core/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/products/core/src/**/*.ts",
+              "libs/products/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/products/core"],
+          "options": {
+            "jestConfig": "libs/products/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "products-api": {
+      "projectType": "library",
+      "root": "libs/products/api",
+      "sourceRoot": "libs/products/api/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/products/api/src/**/*.ts",
+              "libs/products/api/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/products/api"],
+          "options": {
+            "jestConfig": "libs/products/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "applications-api": {
+      "projectType": "library",
+      "root": "libs/applications/api",
+      "sourceRoot": "libs/applications/api/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/applications/api/src/**/*.ts",
+              "libs/applications/api/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/applications/api"],
+          "options": {
+            "jestConfig": "libs/applications/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "applications-core": {
+      "projectType": "library",
+      "root": "libs/applications/core",
+      "sourceRoot": "libs/applications/core/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/applications/core/src/**/*.ts",
+              "libs/applications/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/applications/core"],
+          "options": {
+            "jestConfig": "libs/applications/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/core/src/**/*.ts",
+              "libs/core/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/core"],
+          "options": {
+            "jestConfig": "libs/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "products-products": {
+      "projectType": "library",
+      "root": "libs/products/products",
+      "sourceRoot": "libs/products/products/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/products/products/src/**/*.ts",
+              "libs/products/products/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/products/products"],
+          "options": {
+            "jestConfig": "libs/products/products/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "layout": {
+      "projectType": "library",
+      "root": "libs/layout",
+      "sourceRoot": "libs/layout/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/layout/src/**/*.ts",
+              "libs/layout/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/layout"],
+          "options": {
+            "jestConfig": "libs/layout/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "applications-application-form": {
+      "projectType": "library",
+      "root": "libs/applications/application-form",
+      "sourceRoot": "libs/applications/application-form/src",
+      "prefix": "ric",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/applications/application-form/src/**/*.ts",
+              "libs/applications/application-form/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/applications/application-form"],
+          "options": {
+            "jestConfig": "libs/applications/application-form/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

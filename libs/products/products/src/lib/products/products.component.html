@@ -1,0 +1,25 @@
+<mat-spinner
+  *ngIf="state.isLoading"
+  class="products-loading-indicator"
+></mat-spinner>
+
+<ng-container *ngIf="!state.isLoading">
+  <div *ngIf="state.isFailed" class="products-loading-error">
+    <div class="mat-h1">Failed to load products</div>
+    <div>
+      Click
+      <button mat-raised-button color="primary" (click)="onTryLoadProducts()">
+        Refresh
+      </button>
+      to try again.
+    </div>
+  </div>
+  <ng-container *ngIf="!state.isFailed">
+    <ric-products-list
+      [products]="products"
+      [selectedProductId]="selectedProductId"
+      (productSelected)="onProductSelected($event)"
+      (applyForProduct)="onApplyForProduct($event)"
+    ></ric-products-list>
+  </ng-container>
+</ng-container>

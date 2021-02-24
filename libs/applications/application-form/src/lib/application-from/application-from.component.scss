@@ -1,0 +1,16 @@
+.submitting-indicator {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.application-loading-indicator,
+.application-loading-error {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.application-loading-error {
+  text-align: center;
+}

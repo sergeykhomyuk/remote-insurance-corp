@@ -1,5 +1,3 @@
-import { getGreeting } from '../support/app.po';
-
 describe('field-sales', () => {
   beforeEach(() => cy.visit('/'));
 
@@ -8,6 +6,6 @@ describe('field-sales', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to field-sales!');
+    // getGreeting().contains('Welcome to field-sales!');
   });
 });

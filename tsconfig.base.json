@@ -13,8 +13,21 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ric/products/core": ["libs/products/core/src/index.ts"],
+      "@ric/products/api": ["libs/products/api/src/index.ts"],
+      "@ric/applications/api": ["libs/applications/api/src/index.ts"],
+      "@ric/applications/core": ["libs/applications/core/src/index.ts"],
+      "@ric/core": ["libs/core/src/index.ts"],
+      "@ric/products/products": ["libs/products/products/src/index.ts"],
+      "@ric/layout": ["libs/layout/src/index.ts"],
+      "@ric/applications/application-form": [
+        "libs/applications/application-form/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

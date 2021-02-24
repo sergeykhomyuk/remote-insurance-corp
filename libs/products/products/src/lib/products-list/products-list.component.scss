@@ -1,0 +1,27 @@
+$mat-card-header-size: 40px !default;
+
+.product-header {
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+  .product-title {
+    align-items: center;
+    min-width: 225px;
+
+    .product-icon {
+      height: $mat-card-header-size;
+      width: $mat-card-header-size;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 1rem;
+
+      // Makes `<img>` tags behave like `background-size: cover`. Not supported
+      // in IE, but we're using it as a progressive enhancement.
+      object-fit: cover;
+    }
+  }
+
+  .product-description-short {
+    align-items: center;
+  }
+}

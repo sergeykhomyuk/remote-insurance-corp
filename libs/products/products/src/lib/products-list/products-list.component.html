@@ -1,0 +1,37 @@
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let product of products; trackBy: trackByProductId"
+    [expanded]="product.id === selectedProductId"
+    (opened)="onProductOpened(product)"
+    (afterCollapse)="onProductClosed(product)"
+  >
+    <mat-expansion-panel-header class="product-header">
+      <mat-panel-title class="product-title">
+        <img
+          class="product-icon"
+          [src]="product.description.imageUrl"
+          [attr.alt]="product.name"
+        />
+        <div class="mat-body-strong">{{ product.name }}</div>
+      </mat-panel-title>
+      <mat-panel-description class="product-description-short mat-small">
+        {{ product.description.short }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div>
+      {{ product.description.full }}
+    </div>
+
+    <mat-action-row>
+      <button
+        style="margin-right: auto"
+        mat-raised-button
+        color="primary"
+        (click)="onApplyForProduct(product)"
+      >
+        Apply
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

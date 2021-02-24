@@ -1,0 +1,13 @@
+<div *ngIf="errors?.required">{{ fieldMetaData?.title }} is required.</div>
+<ng-container [ngSwitch]="fieldMetaData?.type">
+  <ric-application-form-string-field-errors
+    *ngSwitchCase="ApplicationFieldType.String"
+    [errors]="errors"
+    [fieldMetaData]="fieldMetaData"
+  ></ric-application-form-string-field-errors>
+  <ric-application-form-number-field-errors
+    *ngSwitchCase="ApplicationFieldType.Number"
+    [errors]="errors"
+    [fieldMetaData]="fieldMetaData"
+  ></ric-application-form-number-field-errors>
+</ng-container>

@@ -1,105 +1,107 @@
+# Remote Insurance Corp.
 
+## Architecture
 
-# Ric
+Application is based on the NX monorepo architecture and consists of the following application and libraries:
 
-This project was generated using [Nx](https://nx.dev).
+- field-sales - application entry point (dummy)
+- layout - application layout (dummy)
+- core - domain-independent utils, helpers, services shared across all modules
+- products - products feature library
+- applications - applications feature library
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+NOTE: run `npm run dep-graph` to generate modules dependencies graph.
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+Application architecture could be easily scaled by adding new libraries and expanding existing ones by adding new feature modules.
+The team could easily define new schematics and add them `tools` to scaffold new libraries.
 
-## Quick Start & Documentation
+### Architecture principles
 
-[Nx Documentation](https://nx.dev/angular)
+- Modular architecture (see `/libs`)
+- Strict modules boundaries (see `libs/products/products/src/index.ts`, `.eslintrc.json` -> `@nrwl/nx/enforce-module-boundaries`, `nx.json` -> `projects`)
+- Lazy loading for routes (see `AppRoutingModule`)
+- Inputs validation (see `ApplicationFromComponent.ngOnChanges`)
+- Params validation (see `@required` and `Assert`)
+- Immutable models (see `Product`)
+- API models are mapped into UI models (see `ApplicationsApiMappingService`, this allows BE and UI to have different naming conventions, reduces coupling between BE and UI, allows UI to support multiple API's versions without changing components, allows to use JS/custom types in models (not just JSON types))
+- Low cyclomatic complexity (use async/await to keep code flat (Promises could be replaced with Observables if the team prefers them), splitting large methods)
+- Single object responsibility (see `ApplicationFormFieldComponent`)
+- Business logic encapsulation (see `ApplicationFormBuilderService`)
+- ChangeDetectionStrategy: OnPush
+- Split components into 3 categories:
+  - Containers: resolve dependencies, handle state (see `ProductsComponent`)
+  - Dummy: render state (see `ProductsListComponent`)
+  - Entry: resolve params (routes, dialog), manage layout (see `ProductsPageComponent`)
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+## Pre-requirements
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+- Collect requirements, use- and edge- cases from all users categories (first of all - field sales)
+- Define high-level requirements, split them into epics -> user stories / tasks -> sub-tasks
+- Define API (e.g. use OAS)
+- Design UI (at least high-level mockups)
+- Define the list of supported browsers, devices, screen resolutions
+- Define budgets for bundles sizes, performance, memory consumption
+- Define the list of supported locales and languages
+- Define unit and e2e tests coverage requirements
+- Define code style guide, architecture, common patterns, and practices (adjust editor/eslint/prettier configs if required)
+- Define content security requirements (CSP, Subresource Integrity)
+- Define static content caching and compression policies
+- Define CI/CD pipeline to build staging/production images and run tests
+- Define pre-commit hooks
+- Define visual styleguide (color palette, UX/UI patterns), define core variables, mixins, animations, components
+- Define the list of dependencies, lock versions in `package.json`
+- Implement authentication and authorization (use `HttpInterceptor` to catch Unauthorized and Forbidden responses, use `CanActivate` guards to protect routes, introduce roles/stereotypes for all users types)
+- Implement exceptions handling (implement `LoggerService.captureException`, implement global `ErrorHandler`, implement handlers for 4XX/5XX's responses, implement NotFound page, implement not supported browser/device page)
+- Implement `Layout` module
+- Implement `AppVersionService` to detect new API/App versions
+- Implement Stores (e.g. based on NgRx) to cache data and share it across libraries/components hierarchies (suggestion: introduce middleware if it's required to save/restore the state to/from local storage)
+- Implement metrics/stats collection
+- Implement GDPR features (application is going to store clients data)
 
-## Adding capabilities to your workspace
+## Implementation and Requirements
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+Disclaimer: 2 hours is a very strict constraint, so I focused on demonstrating key architecture principles and implementing happy-path scenario for fetching the list of products, displaying them, and rendering the product application form with 2 fields types (text, number).
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+That's obviously is not enough to solve the problem of Remote Insurance Corp. Looks like they need an app which could work in an offline mode on a laptop or a tablet, so sales could download all product brochures and application forms he needs for a day, go offline, visit clients, store submitted application in local storage/server and submit applications when he's back online. So the overall happy-path workflow will be:
 
-Below are our core plugins:
+1. Login into the application as a field sales
+2. Select list of products that should be available in an offline mode, download brochures and application forms metadata (store them in local storage/server (2nd option is better since it allows to encrypt data, but requires additional setup and could be problematic if iOS/Android tablet is used). If data is going to be stored in the local storage - consider using asymmetric encryption for clients data)
+3. Visit clients, demonstrate previously downloaded brochures, offer clients to complete an application form (save application data on local storage/server)
+4. Once field sales he should upload all applications forms, resolve all potential conflicts if form structure was updated while he was offline
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+## Backlog
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
+### Products
 
-## Generate an application
+- Implement `products/store` module (e.g. based on NxRg)
+- Redesign products components for better UX/UI (navigation, sorting, filtering, pagination, categories)
+- Implement `ProductBrochure` to render visually appealing product description (currently it's text-only, if brochures are big - consider introducing an `/products/{id}/description` end-point to reduce `/products` payload size)
+- Implement the ability to download brochures and application forms metadata and use them instead of calling REST API if there is no internet connection (suggestion: use NgRx effects to encapsulate this logic)
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+### Applications
 
-> You can use any of the plugins above to generate applications as well.
+- Implement `products/store` module (e.g. based on NxRg)
+- Redesign application components for better UX/UI
+- Expand the list of supported `ApplicationFieldType`'s, validations, introduce grouping/wizards if forms are large/complicated
+- Implement the ability to store submitted applications in local storage/server if there is no internet connection
+- Implement the ability to list/update/delete all stored applications (make sure that clients cannot access to them)
+- Implement the ability to submit all stored applications (add the ability to resolve potential conflicts)
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+### All
 
-## Generate a library
+- Integrate with real API (if BE can generate JSON schema for API - consider replacing `any`/`unknown` in mapping services with auto-generated TS interfaces)
+- Implement unit and e2e tests
+- Implement i18n for supported locales and languages (potentially replace all texts in API responses with i18n keys)
+- Implement accessibility features (aria, titles, tooltips, tab indexes, ...)
+- If the product is going to be available on the internet - make sure that it's SEO-friendly
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+## Other
 
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@ric/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-
-
-
-
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+- Create PR's -> get approves -> merge
+- Wait till CI will run tests and deploy changes to staging
+- Assign user stories/tasks on QA/Tech Writer/Designer for testing/documenting/reviewing
+- Make a demo for field sales to explain new functionality
+- Tag release
+- Trigger canary deployment
+- Perform integration/performance/regression canary testing
+- Switch to production
